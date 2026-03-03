@@ -156,3 +156,7 @@ I have tried to change Netlify location for the index.html but I did not find it
 The index.html is in the root with the README.txt
 
 
+### CSS validators
+On all CSS files ( Exept for globa.css ), the Validator will give the following warning:
+"CSS variable "--sweetpinkdarkest" is used but not declared in this file - it may be defined elsewhere" 
+This is okay I assume, due to me having all the varibles for the colors in global.css, and it would not be DRY if I add all colors variables to all css files.
