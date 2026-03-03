@@ -103,7 +103,7 @@ I have published the webbsite to Netlify, so no instructions for how to start it
 
 
 
-8. Kvalitet 
+### 8. Kvalitet 
 -- **DONE** -- 
 All code has been clenad up so everything has a purpose.
 Same with links, all links work, both to the different html pages and external webbsites (date for last tested external webbsites by me: 03-03-2026)
@@ -111,7 +111,7 @@ Same with links, all links work, both to the different html pages and external w
 Same with folder, files and images soting in the project, they have been named and sorted accoringly to a readble structure.
 
 
-9. Kodvalidering 
+### 9. Kodvalidering 
 
 -- **DONE** -- 
 Other than the webbsite been controled with the lence of WAVE, it has also been put in a HTML and CSS validators.
