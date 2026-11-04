@@ -33,8 +33,7 @@ PARTS ||--o{ JOB_PARTS : uses
 
 CUSTOMERS {
     INT customer_id PK "AUTO INCREMENT"
-    VARCHAR(50) first_name "NOT NULL"
-    VARCHAR(50) last_name "NOT NULL"
+    VARCHAR(100) customer_name "NOT NULL"
     VARCHAR(100) email UK "NOT NULL"
     INT phone UK "NOT NULL"
 }
@@ -71,8 +70,7 @@ REPAIR_JOBS {
 
 TECHNICIANS {
     INT technician_id PK "AUTO INCREMENT"
-    VARCHAR(50) technician_first_name "NOT NULL"
-    VARCHAR(50) technician_last_name "NOT NULL"
+    VARCHAR(100) technician_name "NOT NULL"
     VARCHAR(100) email UK "NOT NULL"
     VARCHAR(50) speciality "NULL"
 }
