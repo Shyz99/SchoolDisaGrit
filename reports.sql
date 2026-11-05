@@ -27,6 +27,7 @@ FROM
 --?--------------------------------------------------------------------------
 --? B. Visa antalet ärenden per tekniker. Även en tekniker utan ärenden ska synas med antalet noll.
 --?--------------------------------------------------------------------------
+--* COUNT(r.job_id) gör så att tekniker utan ett jobb kommer få 0
 SELECT
     t.technicians_id,
     t.technicians_name,
@@ -97,6 +98,8 @@ HAVING
 --?--------------------------------------------------------------------------
 --?--------------------------------------------------------------------------
 --? E. Visa genomsnittlig arbetskostnad per tekniker med AVG. Välj en lämplig avrundning.
+--* Only counts the labor_cost_sek and not the labor_cost_sek + (part_cost_sek*quantity)
+--* In this fictional senario: Its because the customer only pays for the labor cost and not the part cost, the part cost is covered by the company
 SELECT
     t.technicians_id,
     t.technicians_name,

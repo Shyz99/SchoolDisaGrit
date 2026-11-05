@@ -3,41 +3,8 @@ CREATE DATABASE fixpoint_group4 CHARACTER
 SET
     utf8mb4;
 
---? USE ---------------------------------------------------------------------
+--? USE DATABASE ---------------------------------------------------------------------
 USE fixpoint_group4;
-
---? Display all ---------------------------------------------------------------
-SHOW TABLES;
-
-SELECT
-    *
-FROM
-    customers;
-
-SELECT
-    *
-FROM
-    devices;
-
-SELECT
-    *
-FROM
-    technicians;
-
-SELECT
-    *
-FROM
-    repair_jobs;
-
-SELECT
-    *
-FROM
-    parts;
-
-SELECT
-    *
-FROM
-    job_parts;
 
 --? CREATE TABLES ---------------------------------------------------------------
 CREATE TABLE
@@ -45,7 +12,7 @@ CREATE TABLE
         customer_id INT NOT NULL AUTO_INCREMENT,
         customer_name VARCHAR(100) NOT NULL,
         email VARCHAR(100) NOT NULL UNIQUE,
-        phone INT NOT NULL UNIQUE,
+        phone VARCHAR(20) NOT NULL UNIQUE,
         PRIMARY KEY (customer_id)
     ) ENGINE = InnoDB;
 
@@ -92,15 +59,55 @@ CREATE TABLE
         part_id INT NOT NULL,
         quantity INT NULL,
         PRIMARY KEY (job_id, part_id),
-        FOREIGN KEY (job_id) REFERENCES repair_jobs (job_id) ON UPDATE CASCADE,
-        FOREIGN KEY (part_id) REFERENCES parts (part_id) ON UPDATE CASCADE
+        FOREIGN KEY (job_id) REFERENCES repair_jobs (job_id) ON DELETE RESTRICT ON UPDATE CASCADE,
+        FOREIGN KEY (part_id) REFERENCES parts (part_id) ON DELETE RESTRICT ON UPDATE CASCADE
     ) ENGINE = InnoDB;
 
---? ALTER TABLES ---------------------------------------------------------------
-DELETE FROM customer;
+--? DISPLAY TABLES ---------------------------------------------------------------
+SHOW TABLES;
 
+SELECT
+    *
+FROM
+    customers
+ORDER BY
+    customer_id;
+
+SELECT
+    *
+FROM
+    devices;
+
+SELECT
+    *
+FROM
+    technicians;
+
+SELECT
+    *
+FROM
+    repair_jobs;
+
+SELECT
+    *
+FROM
+    parts;
+
+SELECT
+    *
+FROM
+    job_parts;
+
+--? ALTER TABLES ---------------------------------------------------------------
 ALTER TABLE customer
 RENAME TO customers;
+
+--* the 0 from the begining of the nummber disapeared when importing so we changed it from INT to a VARCHAR()
+ALTER TABLE customers MODIFY COLUMN phone VARCHAR(20) NOT NULL UNIQUE;
+
+--! DELETE ALL DATA IN TABLE (This do not delete the Table)
+--* We used it for cleaning up tables when importing data errors accured instead of DROP a table and re-creating it
+DELETE FROM customers;
 
 DELETE FROM devices;
 
@@ -114,7 +121,7 @@ DELETE FROM job_parts;
 
 DROP VIEW service_tickets;
 
---? VIEW TABLES ---------------------------------------------------------------
+--? CREATE A VIEW TABLE ---------------------------------------------------------------
 CREATE VIEW
     service_tickets AS
 SELECT
@@ -129,4 +136,59 @@ FROM
     JOIN repair_jobs AS r ON r.devices_id = d.devices_id
     LEFT JOIN technicians AS t ON t.technicians_id = r.technicians_id;
 
+--*------------------------------------------------------------------------------------
+--*------------------------------------------------------------------------------------
+--*------------------------------------------------------------------------------------
+--*------------------------------------------------------------------------------------
+--*------------------------------------------------------------------------------------
+--*------------------------------------------------------------------------------------
+--? PROOVE THAT THE DATABASE WORKS ----------------------------------------------------
 --?------------------------------------------------------------------------------------
+--?------------------------------------------------------------------------
+--?? Update ??--
+--?------------------------------------------------------------------------
+UPDATE repair_jobs
+SET
+    labor_cost_sek = 5000
+WHERE
+    job_id = 1001;
+
+--* Check with Select so Update wasw succsefull
+SELECT
+    job_id,
+    labor_cost_sek
+FROM
+    repair_jobs;
+
+--?------------------------------------------------------------------------
+--** Insert **--
+--?------------------------------------------------------------------------
+INSERT INTO
+    customers (customer_name, email, phone)
+VALUES
+    ('Catherine Wibe', 'cat@temp.com', '0700101010110');
+
+--* Check with Select so the Insert was succsefull
+SELECT
+    customer_id,
+    customer_name,
+    email,
+    phone
+FROM
+    customers;
+
+--?------------------------------------------------------------------------
+--!! Delete !!--
+--?------------------------------------------------------------------------
+DELETE FROM customers
+WHERE
+    customer_id = 26;
+
+--* Check with Select so the Delete was succsefull
+SELECT
+    customer_id,
+    customer_name,
+    email,
+    phone
+FROM
+    customers;
